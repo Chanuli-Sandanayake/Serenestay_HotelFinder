@@ -1,0 +1,302 @@
+/* style.css */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f8f8f8;
+}
+
+/* ✅ Navbar */
+.header {
+  background: #4e008e;
+  color: white;
+  padding: 10px 0;
+}
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo {
+  height: 100px;
+  margin-left: 10px;
+}
+.site-title {
+  font-size: 24px;
+  font-weight: bold;
+}
+.menu a {
+  color: white;
+  margin-left: 20px;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* 🎥 Hero Section */
+.hero {
+  position: relative;
+  height: 400px;
+  overflow: hidden;
+}
+.hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.tagline {
+  color: white;
+  font-size: 32px;
+  text-align: center;
+}
+
+/* 📍 Filter Section */
+.filter-section {
+  background: white;
+  padding: 20px 0;
+  text-align: center;
+}
+.filter-section input,
+.filter-section select {
+  padding: 10px;
+  margin: 0 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+.filter-section button {
+  padding: 10px 20px;
+  background-color: #4e008e;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* 🏨 Listings */
+.hotel-listings {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 30px 0;
+}
+
+
+/* 🌄 Parallax */
+.parallax {
+  background-image: url('images/parallax.jpg');
+  height: 300px;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* 🖼️ Thumbnail Gallery */
+.gallery {
+  padding: 40px 0;
+}
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 0 20px;
+}
+
+.gallery-grid img {
+  width: 350px;
+  border-radius: 10px;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.gallery-grid img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+/* 🔻 Footer */
+.footer {
+  background: #4e008e;
+  color: white;
+  padding: 20px 0;
+  text-align: center;
+}
+.footer .links a {
+  color: white;
+  margin: 0 15px;
+  text-decoration: none;
+}
+.stay-card {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.08);
+  width: 300px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.stay-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+.stay-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+.stay-info {
+  margin-top: 10px;
+  text-align: left;
+}
+.stay-info h3 {
+  margin: 5px 0;
+}
+.stay-info a {
+  display: inline-block;
+  margin-top: 5px;
+  color: #4e008e;
+  text-decoration: none;
+  font-weight: bold;
+}
+button:hover {
+  background-color: #3700b3;
+}
+html {
+  scroll-behavior: smooth;
+}
+/* 🧭 About Section */
+.about {
+  padding: 60px 20px;
+  background-color: #f4f0fb;
+  text-align: center;
+}
+.about h2 {
+  font-size: 28px;
+  margin-bottom: 15px;
+  color: #4e008e;
+}
+.about p {
+  font-size: 18px;
+  max-width: 800px;
+  margin: auto;
+  line-height: 1.6;
+}
+
+/* 💼 Services Section */
+.services {
+  padding: 60px 20px;
+  background-color: #ffffff;
+  text-align: center;
+}
+.services h2 {
+  font-size: 28px;
+  margin-bottom: 30px;
+  color: #4e008e;
+}
+.service-list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+.service-item {
+  background: #f4f0fb;
+  border-radius: 10px;
+  padding: 20px;
+  width: 300px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.service-item h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #3700b3;
+}
+.service-item p {
+  font-size: 16px;
+  line-height: 1.5;
+}
+/* 📬 Contact Section */
+.contact {
+  background-color: #f4f0fb;
+  padding: 60px 20px;
+  text-align: center;
+}
+.contact h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #4e008e;
+}
+#contactForm {
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  margin: auto;
+}
+#contactForm input,
+#contactForm textarea {
+  margin-bottom: 15px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+}
+#contactForm button {
+  background-color: #4e008e;
+  color: white;
+  border: none;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+#contactForm button:hover {
+  background-color: #3700b3;
+}
+
+@media (max-width: 768px) {
+  /* 📱 Stack logo, title, and links */
+  .nav {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .logo {
+    height: 70px;
+    margin: 10px auto;
+  }
+
+  .site-title {
+    font-size: 20px;
+    margin: 5px 0;
+  }
+
+  .menu {
+    margin-top: 10px;
+  }
+
+  .menu a {
+    display: block;
+    margin: 5px 0;
+    font-size: 16px;
+  }
+}
+@media (max-width: 768px) {
+  .gallery-grid img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+
+
+

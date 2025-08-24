@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SereneStay - Find Your Perfect Stay</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- ✅ AOS Animation CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+</head>
+<body>
+  <!-- ✅ Navbar -->
+  <header class="header">
+    <div class="container nav">
+      <img src="images/logo.png" alt="SereneStay Logo" class="logo" />
+      <h1 class="site-title">SereneStay</h1>
+      <nav class="menu">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ✅ Hero Section with Rotating Videos -->
+  <section class="hero" id="home">
+    <video autoplay muted loop class="hero-video" id="heroVideo" playsinline>
+      <source src="videos/hero1.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+    <div class="hero-overlay">
+      <h2 class="tagline">Find your perfect stay in Sri Lanka</h2>
+    </div>
+  </section>
+
+  <!-- 📍 Filter Section -->
+  <section class="filter-section">
+    <div class="container">
+      <input type="text" id="searchBox" placeholder="Where are you going?" />
+      <select id="typeSelect">
+        <option value="">Select type</option>
+        <option value="hotel">Hotel</option>
+        <option value="villa">Villa</option>
+      </select>
+      <button id="searchBtn">Search</button>
+    </div>
+  </section>
+
+  <!-- 🏨 Search Results Area -->
+  <main class="hotel-listings container" id="hotelList">
+    <!-- Results will be injected here -->
+  </main>
+
+  <!-- 🌄 Parallax Section -->
+  <section class="parallax"></section>
+
+  <!-- 🖼️ Thumbnail Gallery -->
+  <section class="gallery container">
+    <h3>Explore Destinations</h3>
+    <div class="gallery-grid">
+      <img src="images/place1.jpg" alt="Place 1" data-aos="zoom-in" />
+      <img src="images/place2.jpg" alt="Place 2" data-aos="zoom-in" data-aos-delay="100" />
+      <img src="images/place3.jpg" alt="Place 3" data-aos="zoom-in" data-aos-delay="200" />
+    </div>
+  </section>
+
+  <!-- 🧭 About Section -->
+<section class="about container" id="about" data-aos="fade-up" data-aos-delay="200">
+  <h2>About SereneStay</h2>
+  <p>
+    SereneStay is your trusted travel companion for discovering handpicked hotels and villas in Sri Lanka.
+    Whether you're seeking coastal calm, cultural experiences, or hill-country charm — we help you find your perfect stay.
+  </p>
+</section>
+
+<!-- 💼 Services Section -->
+<section class="services container" id="services" data-aos="fade-up" data-aos-delay="200">
+  <h2>Our Services</h2>
+  <div class="service-list">
+    <div class="service-item">
+      <h3>Personalized Stay Suggestions</h3>
+      <p>Get location- and preference-based recommendations tailored for your perfect holiday.</p>
+    </div>
+    <div class="service-item">
+      <h3>Verified Listings</h3>
+      <p>Every hotel and villa we list is verified for quality, cleanliness, and service excellence.</p>
+    </div>
+    <div class="service-item">
+      <h3>Direct Booking</h3>
+      <p>We redirect you straight to the official site — no third-party fees or commissions.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 📬 Contact Section -->
+<section class="contact container" id="contact">
+  <h2>Contact Us</h2>
+  <form id="contactForm">
+    <input type="text" name="from_name" placeholder="Your Name" required />
+    <input type="email" name="from_email" placeholder="Your Email" required />
+    <input type="text" name="subject" placeholder="Subject" required />
+    <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+    <button type="submit">Send Message</button>
+  </form>
+  <p id="form-status" style="margin-top: 10px;"></p>
+</section>
+
+
+
+  <!-- 🔻 Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="links">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <p>&copy; 2025 SereneStay. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- ✅ Firebase SDKs -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyC8GJxFT0c9NVhz69KSfNVcytOEHiQuXZk",
+      authDomain: "serenestay-6569e.firebaseapp.com",
+      databaseURL: "https://serenestay-6569e-default-rtdb.firebaseio.com",
+      projectId: "serenestay-6569e",
+      storageBucket: "serenestay-6569e.appspot.com",
+      messagingSenderId: "846855257072",
+      appId: "1:846855257072:web:62dae7fc7b3bc077abbb35"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    const searchBox = document.getElementById("searchBox");
+    const typeSelect = document.getElementById("typeSelect");
+    const searchBtn = document.getElementById("searchBtn");
+    const hotelList = document.getElementById("hotelList");
+
+    searchBtn.addEventListener("click", () => {
+      const query = searchBox.value.trim().toLowerCase();
+      const selectedType = typeSelect.value.trim().toLowerCase();
+
+      const placesRef = ref(db, "places");
+
+      onValue(placesRef, (snapshot) => {
+        hotelList.innerHTML = ""; // Clear previous results
+
+        snapshot.forEach((childSnapshot) => {
+          const stay = childSnapshot.val();
+          const name = stay.name.toLowerCase();
+          const location = stay.location.toLowerCase();
+          const type = stay.type.toLowerCase();
+
+          const matchesQuery =
+            query === "" || name.includes(query) || location.includes(query);
+          const matchesType = selectedType === "" || type === selectedType;
+
+          if (matchesQuery && matchesType) {
+            const stayCard = `
+              <div class="stay-card">
+                <img src="${stay.image}" alt="${stay.name}" class="stay-image" />
+                <div class="stay-info">
+                  <h3>${stay.name}</h3>
+                  <p><strong>Location:</strong> ${stay.location}</p>
+                  <p><strong>Type:</strong> ${stay.type}</p>
+                  <a href="${stay.officialsite}" target="_blank">Visit Official Site</a>
+                </div>
+              </div>
+            `;
+            hotelList.innerHTML += stayCard;
+          }
+        });
+
+        if (hotelList.innerHTML === "") {
+          hotelList.innerHTML = "<p>No stays found for your search.</p>";
+        }
+      });
+    });
+  </script>
+
+  <!-- ✅ Auto-rotate hero videos -->
+  <script>
+    const videoSources = [
+      "videos/hero1.mp4",
+      "videos/hero2.mp4",
+      "videos/hero3.mp4"
+    ];
+    let currentVideo = 0;
+    const videoElement = document.getElementById("heroVideo");
+
+    setInterval(() => {
+      currentVideo = (currentVideo + 1) % videoSources.length;
+      videoElement.querySelector("source").src = videoSources[currentVideo];
+      videoElement.load();
+      videoElement.play();
+    }, 10000); // Switch every 10s
+  </script>
+
+  <!-- ✅ Load EmailJS SDK -->
+<script type="text/javascript"
+  src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+</script>
+
+<!-- ✅ Initialize EmailJS with Your Public Key -->
+<script type="text/javascript">
+  (function() {
+    emailjs.init({
+      publicKey: "q_Ig1dwBWfr5-2GJn",  // ✅ Your actual public key
+    });
+  })();
+</script>
+
+<script>
+  document.getElementById("contactForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    emailjs.sendForm("service_tkdknwo", "template_0cfsdq8", this)
+      .then(() => {
+        document.getElementById("form-status").textContent = "✅ Message sent successfully!";
+        document.getElementById("contactForm").reset();
+      }, (error) => {
+        document.getElementById("form-status").textContent = "❌ Failed to send. Please try again.";
+        console.error("EmailJS Error:", error);
+      });
+  });
+</script>
+
+<!-- ✅ AOS Animation JS -->
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({
+    duration: 1000, // animation duration in ms
+    once: true      // only animate once
+  });
+</script>
+
+
+</body>
+</html>
